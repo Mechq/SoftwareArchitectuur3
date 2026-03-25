@@ -1,20 +1,26 @@
+using AvansDevOps.ProjectManagement;
+
 namespace AvansDevOps.State;
 
-public class TestingState : IState
+public class TestingState : State
 {
-    public void SendNotification(String info)
+    public TestingState(Component component) : base(component) { }
+
+    public override void SendNotification(String info)
     {
         //send notification to developer in case it fails
     }
 
-    public void CompletedTests()
+    public override void CompletedTests()
     {
         //tests passed
+        _component.ChangeState(new TestedState(_component));
     }
 
-    public void FailedTests()
+    public override void FailedTests()
     {
-     //tests failed   
+     //tests failed, go back to doing   
+     _component.ChangeState(new DoingState(_component));
     }
 
     

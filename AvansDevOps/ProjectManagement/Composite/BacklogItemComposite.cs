@@ -1,3 +1,4 @@
+using AvansDevOps.State;
 using AvansDevOps.User;
 
 namespace AvansDevOps.ProjectManagement;
@@ -5,14 +6,15 @@ namespace AvansDevOps.ProjectManagement;
 public class BacklogItemComposite : Component
 {
     private string _name;
-    private List<Component> _activities { get; }
+    private List<ActivityLeaf> _activities = [];
     private Developer _developer;
-    //private IState status;
+    private State.State _state;
     //private List<Observer> _observers;
     public BacklogItemComposite(string name)
     {
         _name = name;
-        
+        _state = new ToDoState(this);
+
     }
 
     public void Remove(Component component)
@@ -21,7 +23,7 @@ public class BacklogItemComposite : Component
         {
             throw new ArgumentException("Component must be of type ActivityLeaf");
         }
-        _activities.Remove(component);
+        _activities.Remove((ActivityLeaf)component);
     }
 
     public void Add(Component component)
@@ -30,7 +32,7 @@ public class BacklogItemComposite : Component
         {
             throw new ArgumentException("Component must be of type ActivityLeaf");
         }
-        _activities.Add(component);
+        _activities.Add((ActivityLeaf)component);
     }
 
     public void Print(){Console.WriteLine(" This backlog item is called " + _name + " and contains the activities: "+ _activities);}
@@ -40,8 +42,24 @@ public class BacklogItemComposite : Component
         return  _name;
     }
 
+    public List<ActivityLeaf> GetActivities()
+    {
+        return _activities;
+    }
+
     public void AssignDeveloper(Developer developer)
     {
         _developer = developer;
+    }
+    
+    public void ChangeState(State.State newState)
+    {
+        Console.WriteLine($"Context: Transition to {newState.GetType().Name}.");
+        _state = newState;
+    }
+
+    public State.State GetState()
+    {
+        return _state;
     }
 }

@@ -1,35 +1,34 @@
-﻿using System.Net.Quic;
+﻿using AvansDevOps;
 using AvansDevOps.ProjectManagement;
 using AvansDevOps.User;
 
-class Program
+internal class Program
 {
-
-    static void Main()
+    private static void Main()
     {
         Console.WriteLine("Login");
-        
+
         Console.WriteLine("Email: ");
-        string email = Console.ReadLine();
-        
+        var email = Console.ReadLine();
+
         Console.WriteLine("Password: ");
-        string password = Console.ReadLine();
-        
-        int phoneNumber = 31622434;
-        string userName = "Main User";
-        ProductOwner productOwner = new ProductOwner(userName, email, password,  phoneNumber);
-        
-        List<ProjectComposite> projects = new List<ProjectComposite>();
-        
+        var password = Console.ReadLine();
+
+        var phoneNumber = 31622434;
+        var userName = "Main User";
+        var productOwner = new ProductOwner(userName, email, password, phoneNumber);
+
+        var projects = new List<ProjectComposite>();
+
         Console.WriteLine("You are now logged in as a Product Owner");
         Console.WriteLine("You have " + projects.Count + " projects");
-        
-        Boolean exit = false;
+
+        var exit = false;
         while (!exit)
         {
             Console.WriteLine("\nOptions: \n 1. Create a project \n 2. View all your projects \n 3. Quit");
             Console.WriteLine("Enter option: ");
-            String option = Console.ReadLine();
+            var option = Console.ReadLine();
 
             switch (option)
             {
@@ -37,14 +36,9 @@ class Program
                     CreateProject(productOwner);
                     break;
                 case "2":
-                    if (projects.Count == 0)
-                    {
-                        Console.WriteLine("You have no projects");
-                    }
-                    foreach (ProjectComposite project in projects)
-                    {
-                        project.Print();
-                    };
+                    if (projects.Count == 0) Console.WriteLine("You have no projects");
+                    foreach (var project in projects) project.Print();
+                    ;
                     break;
                 case "3":
                     exit = true;
@@ -54,22 +48,18 @@ class Program
                     break;
             }
         }
-
     }
 
-  
+
     protected static void CreateProject(ProductOwner productOwner)
     {
-        List<User> users = new List<User>();
-        users.Add(productOwner);
-        
         Console.WriteLine("Please enter your project name: ");
-        String projectName = Console.ReadLine();
+        var projectName = Console.ReadLine();
         
-        ProjectBacklogComposite projectBacklog = new ProjectBacklogComposite();
-        ProjectComposite project = new ProjectComposite(projectName, productOwner, projectBacklog);
-        
-        Boolean exit =  false; 
+        var project = new ProjectComposite(projectName, productOwner);
+        project.AddUser(productOwner);
+
+        var exit = false;
         while (!exit)
         {
             Console.WriteLine("\nProject: " + project.GetName());
@@ -83,13 +73,13 @@ class Program
                               "6. Create A user \n " +
                               "7. Add dummy users \n " +
                               "8. View all users \n " +
-                              "Q. Quit "  );
+                              "Q. Quit ");
             Console.WriteLine("Enter option:");
-            String input = Console.ReadLine();
+            var input = Console.ReadLine();
             switch (input)
             {
                 case "1":
-                    SprintComposite sprint = createSprint();
+                    var sprint = createSprint();
                     project.Add(sprint);
                     break;
                 case "2":
@@ -97,37 +87,34 @@ class Program
                     break;
                 case "3":
                     Console.WriteLine("Enter the name of your backlog item: ");
-                    String backlogItem = Console.ReadLine();
-                    BacklogItemComposite activity = new BacklogItemComposite(backlogItem);
-                    projectBacklog.Add(activity);
+                    var backlogItemName = Console.ReadLine();
+                    
+                    BacklogItemComposite backlogItem = new BacklogItemComposite(backlogItemName);
+                    project.backlog.Add(backlogItem);
                     break;
                 case "4":
-                    //TODO
+                    Console.WriteLine("What sprint do you want to edit? (type in the number)");
+                    project.PrintSprints();
+                    HandleEditSprint(Console.ReadLine(), project);
                     break;
                 case "5":
-                    projectBacklog.Print();
+                    //print project backlog (add method in project class)
+                    project.backlog.Print();
                     break;
                 case "6":
-                    User user = createUser();
-                    users.Add(user);
-                    Console.WriteLine("Successfully added: " + user.GetType() + " " + user.ToString());
+                    var user = createUser();
+                    project.AddUser(user);
                     break;
                 case "7":
-                    Developer dummyDeveloper = new Developer("Stef Rensma", "ss.rensma@student.avans.nl", "wachtwoord123", 31123456);
-                    ScrumMaster dummyScrumMaster = new ScrumMaster("Menno Emmerik", "m2.emmerik@student.avans.nl", "wachtwoord123", 317890123);
-                    users.Add(dummyDeveloper);
-                    users.Add(dummyScrumMaster);
-                    Console.WriteLine("Successfully added 2 users");
+                    var dummyDeveloper = new Developer("Stef Rensma", "ss.rensma@student.avans.nl", "wachtwoord123",
+                        31123456);
+                    var dummyScrumMaster = new ScrumMaster("Menno Emmerik", "m2.emmerik@student.avans.nl",
+                        "wachtwoord123", 317890123);
+                    project.AddUser(dummyDeveloper);
+                    project.AddUser(dummyScrumMaster);
                     break;
                 case "8":
-                    if (users.Count == 0)
-                    {
-                        Console.WriteLine("You have no users");
-                    }
-                    foreach (User _user in users)
-                    {
-                        Console.WriteLine(_user.ToString());
-                    };
+                    project.PrintAllUsers();
                     break;
                 case "q":
                     exit = true;
@@ -137,21 +124,17 @@ class Program
                     break;
             }
         }
-
-        
-        
-
     }
+
     private static SprintComposite createSprint()
     {
         Console.WriteLine("Sprint Name: ");
-        String sprintName = Console.ReadLine();
+        var sprintName = Console.ReadLine();
         Console.WriteLine("How many days: ");
-        String days = Console.ReadLine();
-        DateTime formatEndDate = DateTime.Today.AddDays(int.Parse(days));
-                    
-        SprintBacklogComposite sprintBacklog = new SprintBacklogComposite();
-        SprintComposite sprint = new SprintComposite(sprintName, new DateTime(), formatEndDate, sprintBacklog);
+        var days = Console.ReadLine();
+        var formatEndDate = DateTime.Today.AddDays(int.Parse(days));
+        
+        var sprint = new SprintComposite(sprintName, new DateTime(), formatEndDate);
         return sprint;
     }
 
@@ -160,27 +143,77 @@ class Program
         while (true)
         {
             Console.WriteLine("User Name: ");
-            String username = Console.ReadLine();
+            var username = Console.ReadLine();
             Console.WriteLine("Email: ");
-            String email = Console.ReadLine();
+            var email = Console.ReadLine();
             Console.WriteLine("Password: ");
-            String password = Console.ReadLine();
+            var password = Console.ReadLine();
             Console.WriteLine("Phonenumber: ");
-            String phoneNumber = Console.ReadLine();
+            var phoneNumber = Console.ReadLine();
             Console.WriteLine("Role (1. Developer, 2. Scrum Master): ");
-            String role = Console.ReadLine();
+            var role = Console.ReadLine();
             User user;
             if (role == "1")
             {
                 user = new Developer(username, email, password, int.Parse(phoneNumber));
-                return user; }
+                return user;
+            }
+
             if (role == "2")
             {
                 user = new ScrumMaster(username, email, password, int.Parse(phoneNumber));
                 return user;
             }
+
             Console.WriteLine("Invalid option, please try again");
-            
         }
+    }
+
+
+    private static void HandleEditSprint(string option, ProjectComposite project)
+    {
+        SprintComposite sprint = project.GetSprintByIndex(int.Parse(option) - 1);
+        
+        var exit = false;
+        while (!exit)
+        {
+            Console.WriteLine("\nSprint Name: " + sprint.GetName());
+            Console.WriteLine("\nOptions:\n " +
+                              "0. Return\n " +
+                              "1. View sprint\n " +
+                              "2. Edit sprint (name & date)\n " +
+                              "3. View sprint backlog\n " +
+                              "4. Edit backlog(1,2,3,etc.)\n " +
+                              "5.\n ");
+            String input = Console.ReadLine();
+            switch (input)
+            {
+                case "0":
+                    exit = true;
+                    break;
+                case "1":
+                    sprint.Print();
+                    break;
+                case "2":
+                    sprint.Edit();
+                    break;   
+                case "3":
+                    sprint.backlog.Print();
+                    break;                
+                case "4":
+                    HandleEditBacklog(sprint.backlog);
+                    break;
+                case "5":
+                    break;
+                default:
+                    Console.WriteLine("Invalid option, please try again");
+                    break;
+            }
+        }
+    }
+
+    private static void HandleEditBacklog(BacklogComposite backlog)
+    {
+        
     }
 }

@@ -1,15 +1,19 @@
+using AvansDevOps.ProjectManagement;
+
 namespace AvansDevOps.State;
 
-public class DoneState : IState
+public class DoneState : State
 {
-    public void SendNotification(String info)
+    public DoneState(Component component) : base(component) { }
+    public override void SendNotification(String info)
     {
         //send noti to developer
     }
 
-    public void StartOver()
+    public override void StartOver()
     {
         //start over all the way
+        _component.ChangeState(new DoingState(_component));
     }
     
     

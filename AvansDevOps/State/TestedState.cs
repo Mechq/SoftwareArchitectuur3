@@ -1,19 +1,24 @@
+using AvansDevOps.ProjectManagement;
+
 namespace AvansDevOps.State;
 
-public class TestedState : IState
+public class TestedState : State
 {
-    public void SendNotification(String info)
+    public TestedState(Component component) : base(component) { }
+    public override void SendNotification(String info)
     {
         
     }
 
-    public void Validated()
+    public override void Validated()
     {
+        _component.ChangeState(new DoneState(_component));  
         //validated by scrummaster
     }
 
-    public void Invalidated()
+    public override void Invalidated()
     {
-        //invalidated by scrummaster
+        _component.ChangeState(new DoingState(_component));
+        //invalidated by scrummaster, go back to doing
     }
 }

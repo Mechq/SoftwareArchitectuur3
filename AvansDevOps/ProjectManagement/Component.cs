@@ -7,4 +7,6 @@ public interface Component
     public void Print();
     
     public string GetName();
+    public virtual void ChangeState(State.State newState){}
+    
 }

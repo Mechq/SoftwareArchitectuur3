@@ -1,14 +1,19 @@
+using AvansDevOps.ProjectManagement;
+
 namespace AvansDevOps.State;
 
-public class ToDoState : IState
+public class ToDoState : State
 {
-    public void SendNotification(String info)
+    
+    public ToDoState(Component component) : base(component) { }
+    public override void SendNotification(String info)
     {
         
     }
-    public void StartedWorking()
+    public override void StartedWorking()
     {
         //picked up by developer
+        _component.ChangeState(new DoingState(_component));
     }
 
     

@@ -1,13 +1,18 @@
+using AvansDevOps.ProjectManagement;
+
 namespace AvansDevOps.State;
 
-public class DoingState: IState
+public class DoingState : State
 {
-    public void SendNotification(String info)
+    public DoingState(Component component) : base(component) { }
+    
+    public override void SendNotification(String info)
     {
         //send notification to testers
     }
-    public void TaskComplete()
+    public override void TaskComplete()
     {
         //developer considers his task done
+        _component.ChangeState(new ReadyForTestingState(_component));
     }
 }

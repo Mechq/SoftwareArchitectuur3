@@ -6,14 +6,14 @@ public class ProjectComposite : Component
 {
     private String _name;
     private ProductOwner _productOwner;
-    private readonly List<Component> _sprints = [];
-    private ProjectBacklogComposite _backlog;
+    private List<User.User> _users = [];
+    private readonly List<SprintComposite> _sprints = [];
+    public BacklogComposite backlog;
 
-    public ProjectComposite(string name, ProductOwner productOwner, ProjectBacklogComposite backlog)
+    public ProjectComposite(string name, ProductOwner productOwner)
     {
         _name = name;
         _productOwner = productOwner;
-        _backlog = backlog;
     }
 
     public void Remove(Component component)
@@ -22,7 +22,7 @@ public class ProjectComposite : Component
         {
             throw new ArgumentException("Component must be of type SprintComposite");
         }
-        _sprints.Remove(component);
+        _sprints.Remove((SprintComposite) component);
         Console.WriteLine("Successfully removed Sprint: "  + component.GetName());
 
     }
@@ -34,21 +34,21 @@ public class ProjectComposite : Component
         {
             throw new ArgumentException("Component must be of type SprintComposite");
         }
-        _sprints.Add(component);
+        _sprints.Add((SprintComposite) component);
         
         Console.WriteLine("Successfully added Sprint: "  + component.GetName());
     }
 
     public void Print(){Console.WriteLine("Project is called:" + _name);}
 
-    public List<Component> GetSprints()
+    public List<SprintComposite> GetSprints()
     {
         return _sprints;
     }
-    
-    public ProjectBacklogComposite GetProjectBacklog()
+
+    public SprintComposite GetSprintByIndex(int index)
     {
-        return _backlog;
+        return  _sprints[index];
     }
     
     public string GetName()
@@ -64,10 +64,30 @@ public class ProjectComposite : Component
         }
         else
         {
-            foreach (Component component in _sprints)
+            for(int i =0; i < _sprints.Count; i++)
             {
-                component.Print();
+                Console.WriteLine($"{i+1}. " + _sprints[i].GetName());
             }
+        }
+    }
+
+    public void AddUser(User.User user)
+    {
+        _users.Add(user);
+        Console.WriteLine("Successfully added User: " + user.ToString());
+    }
+
+    public void RemoveUser(User.User user)
+    {
+        _users.Remove(user);
+        Console.WriteLine("Successfully removed User: " + user.ToString());
+    }
+
+    public void PrintAllUsers()
+    {
+        foreach (User.User user in _users)
+        {
+            Console.WriteLine(user.ToString());
         }
     }
 }

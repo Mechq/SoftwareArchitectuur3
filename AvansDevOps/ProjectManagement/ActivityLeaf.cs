@@ -7,25 +7,31 @@ public class ActivityLeaf : Component
 {
     private String _name;
     private String _description;
-    private IState status;
+    private State.State _state;
     private Developer _developer;
     
-    public ActivityLeaf(string name, string description, Developer developer)
+    public ActivityLeaf(string name, string description)
     {
         _name = name;
         _description = description;
-        _developer = developer;
+
     }
 
-    public void Remove(Component component) {}
+    public void Remove(Component component)
+    {
+        Console.WriteLine("Invalid method for this class");
+    }
 
     public void UpdateDescription(String description)
     {
         //optionally add checks
         _description = description;
     }
-    
-    public void Add(Component component) {}
+
+    public void Add(Component component)
+    {
+        Console.WriteLine("Invalid method for this class");
+    }
 
     public void Print()
     {
@@ -37,13 +43,20 @@ public class ActivityLeaf : Component
         return _name;
     }
 
-    public void ChangeState(IState newState)
+    public void AssignDeveloper(Developer developer)
     {
-        status = newState;
+        _developer  = developer;
     }
 
-    public IState GetStatus()
+    public void ChangeState(State.State newState)
     {
-        return status;
+        Console.WriteLine($"Context: Transition to {newState.GetType().Name}.");
+        _state = newState;
     }
+
+    public State.State GetState()
+    {
+        return _state;
+    }
+    
 }
