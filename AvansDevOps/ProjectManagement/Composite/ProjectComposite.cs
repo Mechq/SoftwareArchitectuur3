@@ -90,4 +90,28 @@ public class ProjectComposite : Component
             Console.WriteLine(user.ToString());
         }
     }
+
+    public void PrintAllScrumMasters()
+    {
+        foreach (User.User user in _users)
+        {
+            if (user.GetType() == typeof(User.ScrumMaster))
+            {
+                Console.WriteLine(user.ToString());
+            }
+        }
+        
+    }
+
+    public User.User? GetUserByName(string name)
+    {
+        foreach (User.User user in _users)
+        {
+            if (user.GetName() == name)
+            {
+                return user;
+            }
+        }
+        return null;
+    }
 }

@@ -21,7 +21,7 @@ internal class Program
 
         var projects = new List<ProjectComposite>();
 
-        Console.WriteLine("You are now logged in as a Product Owner");
+        Console.WriteLine("You are now logged in as " + userName);
         Console.WriteLine("You have " + projects.Count + " projects");
 
         var exit = false;
@@ -35,6 +35,7 @@ internal class Program
             {
                 case "1":
                     ProjectPage.CreateProject(productOwner);
+                    
                     break;
                 case "2":
                     if (projects.Count == 0) Console.WriteLine("You have no projects");

@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices.JavaScript;
+using AvansDevOps.Pages.Components;
 using AvansDevOps.User;
 
 namespace AvansDevOps.ProjectManagement;
@@ -55,11 +56,9 @@ public class SprintComposite : Component
 
     public void Edit()
     {
-        Console.WriteLine("Edit name: ");
-        this._name = Console.ReadLine();
+        this._name = Input.AskQuestion("Enter name: ");
+        var days = Input.AskQuestion("Enter days: ");
         
-        Console.WriteLine("How many days: ");
-        var days = Console.ReadLine();
         _endDate = DateTime.Today.AddDays(int.Parse(days));
     }
 }

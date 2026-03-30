@@ -1,3 +1,4 @@
+using AvansDevOps.Pages.Components;
 using AvansDevOps.ProjectManagement;
 using AvansDevOps.User;
 
@@ -7,8 +8,7 @@ public class ProjectPage
 {
     public static void CreateProject(ProductOwner productOwner)
     {
-        Console.WriteLine("Please enter your project name: ");
-        var projectName = Console.ReadLine();
+        var projectName = Input.AskQuestion("Please enter your project name: ");
         
         var project = new ProjectComposite(projectName, productOwner);
         project.AddUser(productOwner);
@@ -29,8 +29,7 @@ public class ProjectPage
                               "7. Add dummy users \n " +
                               "8. View all users \n " +
                               "Q. Quit ");
-            Console.WriteLine("Enter option:");
-            var input = Console.ReadLine();
+            var input = Input.AskQuestion("Enter option: ");
             switch (input)
             {
                 case "1":
@@ -41,11 +40,8 @@ public class ProjectPage
                     project.PrintSprints();
                     break;
                 case "3":
-                    Console.WriteLine("Enter the name of your backlog item: ");
-                    var backlogItemName = Console.ReadLine();
-                    
-                    Console.WriteLine("Enter the description of your backlog item: ");
-                    var backlogItemDescription = Console.ReadLine();
+                    var backlogItemName = Input.AskQuestion("Enter the name of your backlog item: ");
+                    var backlogItemDescription = Input.AskQuestion("Enter the description of your backlog item: ");
                     
                     BacklogItemComposite backlogItem = new BacklogItemComposite(backlogItemName, backlogItemDescription);
                     project.backlog.Add(backlogItem);
@@ -56,7 +52,6 @@ public class ProjectPage
                     SprintPage.HandleEditSprint(Console.ReadLine(), project);
                     break;
                 case "5":
-                    //print project backlog (add method in project class)
                     project.backlog.Print();
                     break;
                 case "6":

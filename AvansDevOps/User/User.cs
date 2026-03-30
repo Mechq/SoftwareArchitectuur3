@@ -18,5 +18,10 @@ public abstract class User
         _phoneNumber = phoneNumber;
     }
 
+    public string GetName()
+    {
+        return _name;
+    }
+
     public override string ToString(){return _name + " " + _email + " " + _password + " " + _phoneNumber;}
 }

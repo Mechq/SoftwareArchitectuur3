@@ -1,3 +1,4 @@
+using AvansDevOps.Pages.Components;
 using AvansDevOps.User;
 
 namespace AvansDevOps.Pages;
@@ -8,16 +9,12 @@ public class UserPage
     {
         while (true)
         {
-            Console.WriteLine("User Name: ");
-            var username = Console.ReadLine();
-            Console.WriteLine("Email: ");
-            var email = Console.ReadLine();
-            Console.WriteLine("Password: ");
-            var password = Console.ReadLine();
-            Console.WriteLine("Phonenumber: ");
-            var phoneNumber = Console.ReadLine();
-            Console.WriteLine("Role (1. Developer, 2. Scrum Master): ");
-            var role = Console.ReadLine();
+
+            var username = Input.AskQuestion("User Name: ");
+            var email = Input.AskQuestion("Email: ");
+            var password = Input.AskQuestion("Password: ");
+            var phoneNumber = Input.AskQuestion("Phone number: ");
+            var role = Input.AskQuestion("Role (1. Developer, 2. Scrum Master): ");
             User.User user;
             if (role == "1")
             {

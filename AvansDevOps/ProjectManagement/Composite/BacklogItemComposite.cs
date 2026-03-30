@@ -1,4 +1,5 @@
 using AvansDevOps.State;
+using AvansDevOps.Thread;
 using AvansDevOps.User;
 
 namespace AvansDevOps.ProjectManagement;
@@ -10,7 +11,7 @@ public class BacklogItemComposite : Component
     private Developer _developer;
     private String _description;
     private State.State _state;
-    //private List<Observer> _observers;
+    private List<IBacklogObserver> _observers;
     public BacklogItemComposite(string name, string description)
     {
         _name = name;
@@ -58,10 +59,35 @@ public class BacklogItemComposite : Component
     {
         Console.WriteLine($"Context: Transition to {newState.GetType().Name}.");
         _state = newState;
+        NotifyObservers();
     }
 
     public State.State GetState()
     {
         return _state;
     }
+
+    public void AddObserver(IBacklogObserver observer)
+    {
+        _observers.Add(observer);
+    }
+
+    public void RemoveObserver(IBacklogObserver observer)
+    {
+        _observers.Remove(observer);
+    }
+
+    public void NotifyObservers()
+    {
+        foreach (IBacklogObserver observer in _observers)
+        {
+            observer.update(_state);
+        }
+    }
+
+    public IBacklogObserver GetObserverByIndex(int index)
+    {
+        return _observers[index];
+    }
+    
 }

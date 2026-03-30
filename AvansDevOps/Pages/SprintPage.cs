@@ -1,4 +1,6 @@
+using AvansDevOps.Pages.Components;
 using AvansDevOps.ProjectManagement;
+using AvansDevOps.User;
 
 namespace AvansDevOps.Pages;
 
@@ -54,6 +56,16 @@ public class SprintPage
                     break;
                 case "5":
                     project.PrintAllUsers();
+                    String userName = Input.AskQuestion("Which scrum master do you want to assign? Please type in their name: ");
+                    User.User? user  = project.GetUserByName(userName);
+                    if (user.GetType() == typeof(ScrumMaster))
+                    {
+                        sprint.AssignScrumMaster((ScrumMaster)user);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Incorrect role/name");
+                    }
                     break;
                 default:
                     Console.WriteLine("Invalid option, please try again");
