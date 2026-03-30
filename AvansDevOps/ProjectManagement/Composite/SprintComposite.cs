@@ -8,8 +8,8 @@ public class SprintComposite : Component
     private string _name;
     private DateTime _startDate;
     private DateTime _endDate;
-    private ScrumMaster _scrumMaster;
-    public BacklogComposite  backlog;
+    private ScrumMaster? _scrumMaster = null;
+    public BacklogComposite  backlog =  new BacklogComposite();
     private Boolean _isFinished = false;
     private Boolean _isReleased = false;
 
@@ -30,7 +30,7 @@ public class SprintComposite : Component
         Console.WriteLine("Invalid method for this class");
     }
 
-    public void Print(){ Console.WriteLine($"Sprint {_name} started at {_startDate} and ended at {_endDate}. The scrummaster is {_scrumMaster.ToString()}" ); }
+    public void Print(){ Console.WriteLine($"Sprint {_name} started at {_startDate} and ended at {_endDate}. The scrum master is {_scrumMaster?.ToString()}" ); }
     
     public string GetName(){return _name;}
     

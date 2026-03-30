@@ -1,3 +1,5 @@
+using AvansDevOps.ProjectManagement;
+
 namespace AvansDevOps.User;
 
 public abstract class User
@@ -6,6 +8,7 @@ public abstract class User
     private String _email;
     private String _password;
     private int _phoneNumber;
+    
 
     protected User(string name, string email, string password, int phoneNumber)
     {

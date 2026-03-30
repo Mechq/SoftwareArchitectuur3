@@ -8,11 +8,13 @@ public class BacklogItemComposite : Component
     private string _name;
     private List<ActivityLeaf> _activities = [];
     private Developer _developer;
+    private String _description;
     private State.State _state;
     //private List<Observer> _observers;
-    public BacklogItemComposite(string name)
+    public BacklogItemComposite(string name, string description)
     {
         _name = name;
+        _description = description;
         _state = new ToDoState(this);
 
     }

@@ -8,7 +8,7 @@ public class ProjectComposite : Component
     private ProductOwner _productOwner;
     private List<User.User> _users = [];
     private readonly List<SprintComposite> _sprints = [];
-    public BacklogComposite backlog;
+    public BacklogComposite backlog =  new BacklogComposite();
 
     public ProjectComposite(string name, ProductOwner productOwner)
     {

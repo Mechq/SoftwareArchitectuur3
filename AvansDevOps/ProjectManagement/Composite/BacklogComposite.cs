@@ -15,12 +15,17 @@ public class BacklogComposite : Component
     {
         _backlogItems.Add((BacklogItemComposite)backlogItem);
     }
+
+    public BacklogItemComposite getBacklogItemByIndex(int index)
+    {
+        return _backlogItems[index];
+    }
     
     public void Print()
     {
         foreach (BacklogItemComposite backlogItem in _backlogItems)
         {
-            Console.WriteLine($"{_backlogItems.IndexOf(backlogItem)}. Item : {backlogItem.GetName()}");
+            Console.WriteLine($"{_backlogItems.IndexOf(backlogItem) +1}. Item : {backlogItem.GetName()}");
         }
     }
 
