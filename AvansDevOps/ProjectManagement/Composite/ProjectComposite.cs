@@ -95,7 +95,7 @@ public class ProjectComposite : Component
     {
         foreach (User.User user in _users)
         {
-            if (user.GetType() == typeof(User.ScrumMaster))
+            if (user.GetType() == typeof(ScrumMaster))
             {
                 Console.WriteLine(user.ToString());
             }
@@ -103,11 +103,11 @@ public class ProjectComposite : Component
         
     }
 
-    public User.User? GetUserByName(string name)
+    public User.User? GetUserByEmail(string email)
     {
         foreach (User.User user in _users)
         {
-            if (user.GetName() == name)
+            if (user.GetEmail() == email)
             {
                 return user;
             }

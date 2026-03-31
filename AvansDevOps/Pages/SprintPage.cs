@@ -10,13 +10,11 @@ public class SprintPage
 
     public static SprintComposite CreateSprint()
     {
-        Console.WriteLine("Sprint Name: ");
-        var sprintName = Console.ReadLine();
-        Console.WriteLine("How many days: ");
-        var days = Console.ReadLine();
+        var sprintName = Input.AskQuestion("Sprint Name: ");
+        var days = Input.AskQuestion("How many days: ");
         var formatEndDate = DateTime.Today.AddDays(int.Parse(days));
         
-        var sprint = new SprintComposite(sprintName, new DateTime(), formatEndDate);
+        var sprint = new SprintComposite(sprintName, DateTime.Now, formatEndDate);
         return sprint;
     }
 
@@ -36,7 +34,7 @@ public class SprintPage
                               "3. View sprint backlog\n " +
                               "4. Edit sprint backlog\n " +
                               "5. Assign a scrum master\n ");
-            String input = Console.ReadLine();
+            String input = Input.AskQuestion("What would you like to do?");
             switch (input)
             {
                 case "0":
@@ -55,16 +53,16 @@ public class SprintPage
                     BacklogPage.HandleEditBacklog(sprint.backlog);
                     break;
                 case "5":
-                    project.PrintAllUsers();
-                    String userName = Input.AskQuestion("Which scrum master do you want to assign? Please type in their name: ");
-                    User.User? user  = project.GetUserByName(userName);
-                    if (user.GetType() == typeof(ScrumMaster))
+                    project.PrintAllScrumMasters();
+                    String userMail = Input.AskQuestion("Which scrum master do you want to assign? Please type in their mail address: ");
+                    User.User? user  = project.GetUserByEmail(userMail);
+                    if (user == null || user.GetType() != typeof(ScrumMaster) )
                     {
-                        sprint.AssignScrumMaster((ScrumMaster)user);
+                        Console.WriteLine("Incorrect role/name");
                     }
                     else
                     {
-                        Console.WriteLine("Incorrect role/name");
+                        sprint.AssignScrumMaster((ScrumMaster)user);
                     }
                     break;
                 default:

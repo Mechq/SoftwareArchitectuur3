@@ -11,7 +11,7 @@ public class BacklogItemComposite : Component
     private Developer _developer;
     private String _description;
     private State.State _state;
-    private List<IBacklogObserver> _observers;
+    private List<IBacklogObserver> _observers = [];
     public BacklogItemComposite(string name, string description)
     {
         _name = name;
@@ -38,11 +38,20 @@ public class BacklogItemComposite : Component
         _activities.Add((ActivityLeaf)component);
     }
 
-    public void Print(){Console.WriteLine(" This backlog item is called " + _name + " and contains the activities: "+ _activities);}
+    public void Print(){Console.WriteLine(" This backlog item is called " + _name + " and contains the activities: "); PrintActivity();}
+    
     
     public string GetName()
     {
         return  _name;
+    }
+
+    private void PrintActivity()
+    {
+        foreach (ActivityLeaf activity in _activities)
+        {
+            Console.WriteLine(activity.GetName());
+        }
     }
 
     public List<ActivityLeaf> GetActivities()
@@ -66,6 +75,15 @@ public class BacklogItemComposite : Component
     {
         return _state;
     }
+    
+    public void PrintObservers()
+    {
+        foreach (IBacklogObserver observer in _observers)
+        {
+            Console.WriteLine(_observers.IndexOf(observer) + ". "  +observer.GetName());
+        }
+    }
+    
 
     public void AddObserver(IBacklogObserver observer)
     {

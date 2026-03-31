@@ -6,12 +6,15 @@ namespace AvansDevOps.Pages;
 
 public class ProjectPage
 {
-    public static void CreateProject(ProductOwner productOwner)
+    public static void CreateProject(ProductOwner productOwner, ProjectComposite? project)
     {
-        var projectName = Input.AskQuestion("Please enter your project name: ");
+        if (project == null)
+        {
+            var projectName = Input.AskQuestion("Please enter your project name: ");
+            project = new ProjectComposite(projectName, productOwner);
+            project.AddUser(productOwner);
+        }
         
-        var project = new ProjectComposite(projectName, productOwner);
-        project.AddUser(productOwner);
 
         var exit = false;
         while (!exit)
@@ -59,9 +62,9 @@ public class ProjectPage
                     project.AddUser(user);
                     break;
                 case "7":
-                    var dummyDeveloper = new Developer("Stef Rensma", "ss.rensma@student.avans.nl", "wachtwoord123",
+                    Developer dummyDeveloper = new Developer("Stef Rensma", "ss.rensma@student.avans.nl", "wachtwoord123",
                         31123456);
-                    var dummyScrumMaster = new ScrumMaster("Menno Emmerik", "m2.emmerik@student.avans.nl",
+                    ScrumMaster dummyScrumMaster = new ScrumMaster("Menno Emmerik", "m2.emmerik@student.avans.nl",
                         "wachtwoord123", 317890123);
                     project.AddUser(dummyDeveloper);
                     project.AddUser(dummyScrumMaster);

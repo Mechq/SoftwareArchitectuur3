@@ -22,6 +22,11 @@ public abstract class User
     {
         return _name;
     }
+    
+    public string GetEmail()
+    {
+        return _email;
+    }
 
     public override string ToString(){return _name + " " + _email + " " + _password + " " + _phoneNumber;}
 }

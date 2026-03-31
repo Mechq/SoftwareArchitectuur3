@@ -19,7 +19,7 @@ public class DiscussionPage
                               "0. Return\n " +
                               "1. View messages\n " +
                               "2. Write a message\n ");
-            String input = Console.ReadLine();
+            String input = Input.AskQuestion("What would you like to do?");
             switch (input)
             {
                 case "0":

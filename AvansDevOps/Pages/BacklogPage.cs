@@ -43,7 +43,7 @@ public class BacklogPage
                     break;                
                 case "4":
                     backlog.Print();
-                    int backlogItemIndexToEdit = int.Parse(Input.AskQuestion("Enter the number of the item you want to remove: "))-1;
+                    int backlogItemIndexToEdit = int.Parse(Input.AskQuestion("Enter the number of the item you want to edit: "))-1;
                     HandleEditBacklogItem(backlog.getBacklogItemByIndex(backlogItemIndexToEdit));
                     break;
                 case "5":
@@ -63,15 +63,16 @@ public class BacklogPage
         var exit = false;
         while (!exit)
         {
-            Console.WriteLine("\nBacklog Item "  + backlogItem.GetName());
+            Console.WriteLine("\nBacklog Item: "  + backlogItem.GetName());
             Console.WriteLine("\nOptions:\n " +
                               "0. Return\n " +
                               "1. View activities\n " +
                               "2. Add activities\n " +
                               "3. Remove activities\n " +
                               "4. Edit activities\n " +
-                              "5. View discussion\n ");
-            String input = Console.ReadLine();
+                              "5. View discussion\n " + 
+                              "6. Go to the next stage" );
+            String input = Input.AskQuestion("What would you like to do?");
             switch (input)
             {
                 case "0":
@@ -87,13 +88,14 @@ public class BacklogPage
                     backlogItem.Add(activityLeaf);
                     break;   
                 case "3":
-                    String activityName = (Input.AskQuestion("Enter the name of the item you want to edit: "));
+                    String activityName = (Input.AskQuestion("Enter the name of the activity you want to remove: "));
                     List<ActivityLeaf> activityLeaves = backlogItem.GetActivities();
                     foreach (var activity in activityLeaves)
                     {
                         if (activity.GetName().Equals(activityName))
                         {
                             backlogItem.Remove(activity);
+                            break;
                         }      
                     }
                     break;                
@@ -101,7 +103,12 @@ public class BacklogPage
                     //handleEditActivity(Input.AskQuestion("Enter the name of the item you want to edit: "));
                     break;
                 case "5":
-                    
+                    backlogItem.PrintObservers();
+                    String discussionIndex = Input.AskQuestion("Enter the number of the discussion you want to view: ");
+                    DiscussionPage.HandleDiscussion(backlogItem, discussionIndex);
+                    break;
+                case "6":
+
                     break;
                 default:
                     Console.WriteLine("Invalid option, please try again");
