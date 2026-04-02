@@ -1,5 +1,4 @@
 using System.Runtime.InteropServices.JavaScript;
-using AvansDevOps.Pages.Components;
 using AvansDevOps.User;
 
 namespace AvansDevOps.ProjectManagement;
@@ -52,13 +51,5 @@ public class SprintComposite : Component
     public void AssignScrumMaster(ScrumMaster scrumMaster)
     {
         _scrumMaster = scrumMaster;
-    }
-
-    public void Edit()
-    {
-        this._name = Input.AskQuestion("Enter name: ");
-        var days = Input.AskQuestion("Enter days: ");
-        
-        _endDate = DateTime.Today.AddDays(int.Parse(days));
     }
 }
