@@ -1,3 +1,5 @@
+using AvansDevOps.SprintFinish.Pipeline.Commands;
+
 namespace AvansDevOps.SprintFinish.Pipeline;
 
 public class Pipeline
@@ -26,7 +28,6 @@ public class Pipeline
             {
                 _logs.Add(new Log($"{command.GetType().Name}", "FAIL", dt));
                 throw;
-                return false;
             }
         }
 

@@ -1,4 +1,4 @@
-namespace AvansDevOps.SprintFinish.Pipeline;
+namespace AvansDevOps.SprintFinish.Pipeline.Commands;
 
 public class PackageInstaller : ICommand
 {

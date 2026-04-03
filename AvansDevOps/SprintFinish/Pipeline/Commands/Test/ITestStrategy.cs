@@ -1,4 +1,5 @@
-namespace AvansDevOps.SprintFinish.Pipeline.Test;
+
+namespace AvansDevOps.SprintFinish.Pipeline.Commands.Test;
 
 public interface ITestStrategy : ICommand
 {

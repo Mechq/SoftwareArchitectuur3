@@ -6,7 +6,7 @@ namespace AvansDevOps.SprintFinish;
 public class FeedbackSprintStrategy : ISprintStrategy
 {
     private bool _hasUploadedSummary = false;
-    private INotification _notifier;
+    private readonly INotification _notifier;
     private readonly IPipelineToolFactory _factory;
 
     public FeedbackSprintStrategy(INotification notifier, IPipelineToolFactory factory)

@@ -16,7 +16,7 @@ internal class Program
 
     private static void Main()
     {
-        INotification emailNotifier = new EmailAdapter(new EmailService());
+        INotification emailNotifier = new EmailAdapter(new EmailService());/*
         INotification slackNotifier = new SlackAdapter(new SlackService());
         IVersionControl gitHubCreator = new GitHubAdapter(new GitHubService());
         IVersionControl jenkinsCreator = new JenkinsAdapter(new JenkinsService());
@@ -79,7 +79,7 @@ internal class Program
         IReportStrategy PDFreportStrategy = new PDFReport();
         IReportStrategy PNGreportStrategy = new PNGReport();
         sprintOne.GenerateReport(PDFreportStrategy, true, true);
-        Console.WriteLine("-- Created report --\n");
+        Console.WriteLine("-- Created report --\n");*/
 
     }
     

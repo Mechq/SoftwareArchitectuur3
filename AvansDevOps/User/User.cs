@@ -4,10 +4,10 @@ namespace AvansDevOps.User;
 
 public abstract class User
 {
-    private String _name;
-    private String _email;
-    private String _password;
-    private int _phoneNumber;
+    private readonly String _name;
+    private readonly String _email;
+    private readonly String _password;
+    private readonly int _phoneNumber;
     
 
     protected User(string name, string email, string password, int phoneNumber)

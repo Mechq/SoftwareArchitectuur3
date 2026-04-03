@@ -6,7 +6,7 @@ namespace AvansDevOps.SprintFinish;
 public class ReleaseSprintStrategy : ISprintStrategy
 {
     private INotification _notifier;
-    private IPipelineToolFactory _factory;
+    private readonly IPipelineToolFactory _factory;
     private bool _isReleased;
 
     public ReleaseSprintStrategy(INotification notifier,  IPipelineToolFactory factory)

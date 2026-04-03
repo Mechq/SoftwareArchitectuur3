@@ -1,5 +1,6 @@
 using AvansDevOps.Notification;
 using AvansDevOps.ProjectManagement;
+using AvansDevOps.ProjectManagement.Composite;
 using AvansDevOps.State;
 using AvansDevOps.Thread;
 using AvansDevOps.User;
@@ -7,7 +8,7 @@ using AvansDevOps.VersionControl;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
-namespace AvansDevOps.Tests;
+namespace AvansDevOps.Tests.Tests;
 
 [TestFixture]
 public class BacklogItem
@@ -190,7 +191,7 @@ public class MockBacklogObserver : IBacklogObserver
     public State.State LastState { get; private set; }
     private List<string> _messages = [];
 
-    public void update(State.State state)
+    public void Update(State.State state)
     {
         WasNotified = true;
         LastState = state;

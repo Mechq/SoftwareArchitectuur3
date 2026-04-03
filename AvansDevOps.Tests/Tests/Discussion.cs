@@ -1,20 +1,25 @@
-namespace DefaultNamespace;
+using AvansDevOps.ProjectManagement;
+using AvansDevOps.VersionControl;
 using AvansDevOps.Notification;
+using AvansDevOps.ProjectManagement.Composite;
 using AvansDevOps.State;
 using AvansDevOps.Thread;
 using NUnit.Framework;
+namespace AvansDevOps.Tests.Tests;
+
 
 [TestFixture]
 
-public class Discussion
+public class DiscussionTest
 {
-
+    private IVersionControl _versionControl;
     private INotification _notifier;
     private Discussion _discussion;
 
     [SetUp]
     public void SetUp()
     {
+        _versionControl = new GitHubAdapter(new GitHubService());
         _notifier = new SlackAdapter(new SlackService());
         _discussion = new Discussion("General", new List<string>(), _notifier);
     }
@@ -40,8 +45,8 @@ public class Discussion
     [Test]
     public void AddMessage_WhenClosed_DoesNotAddMessage()
     {
-        _discussion.update(new DoneState()); // closes discussion
-
+        var component = new BacklogItemComposite("Test", "desc", _versionControl, _notifier);
+        _discussion.Update(new DoneState(component));
         _discussion.AddMessage("Should not be added");
 
         Assert.That(0, Is.EqualTo(_discussion.GetMessages().Count));
@@ -50,8 +55,8 @@ public class Discussion
     [Test]
     public void Update_FromOpenToDone_DisablesEditing()
     {
-        _discussion.update(new DoneState());
-
+        var component = new BacklogItemComposite("Test", "desc", _versionControl, _notifier);
+        _discussion.Update(new DoneState(component));
         _discussion.AddMessage("Blocked message");
 
         Assert.That(0, Is.EqualTo(_discussion.GetMessages().Count));
@@ -60,8 +65,9 @@ public class Discussion
     [Test]
     public void Update_FromDoneToOpen_AllowsEditingAgain()
     {
-        _discussion.update(new DoneState());
-        _discussion.update(new ToDoState()); // or any non-DoneState
+        var component = new BacklogItemComposite("Test", "desc", _versionControl, _notifier);
+        _discussion.Update(new DoneState(component));
+        _discussion.Update(new ToDoState(component));
 
         _discussion.AddMessage("Now allowed");
 

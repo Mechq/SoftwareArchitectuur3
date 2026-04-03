@@ -6,10 +6,10 @@ namespace AvansDevOps.ProjectManagement.Composite;
 public class ProjectComposite : Component
 {
     private readonly String _name;
-    private ProductOwner _productOwner;
+    private readonly ProductOwner _productOwner;
     private readonly List<User.User> _users = [];
     private readonly List<SprintComposite> _sprints = [];
-    public BacklogComposite backlog =  new BacklogComposite();
+    public BacklogComposite Backlog =  new BacklogComposite();
     private IVersionControl _versionControl;
 
     public ProjectComposite(string name, ProductOwner productOwner, IVersionControl versionControl)
@@ -74,20 +74,20 @@ public class ProjectComposite : Component
     public void AddUser(User.User user)
     {
         _users.Add(user);
-        Console.WriteLine("Successfully added User: " + user.ToString());
+        Console.WriteLine("Successfully added User: " + user);
     }
 
     public void RemoveUser(User.User user)
     {
         _users.Remove(user);
-        Console.WriteLine("Successfully removed User: " + user.ToString());
+        Console.WriteLine("Successfully removed User: " + user);
     }
 
     public void PrintAllUsers()
     {
         foreach (User.User user in _users)
         {
-            Console.WriteLine(user.ToString());
+            Console.WriteLine(user);
         }
     }
 }

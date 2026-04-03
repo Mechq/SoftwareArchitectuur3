@@ -1,4 +1,4 @@
-namespace AvansDevOps.SprintFinish.Pipeline.Test;
+namespace AvansDevOps.SprintFinish.Pipeline.Commands.Test;
 
 public class XUnit : ITestStrategy
 {

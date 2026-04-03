@@ -6,10 +6,10 @@ namespace AvansDevOps.State;
 public abstract class State
 
 {
-    protected Component _component; 
+    protected Component Component; 
     protected State(Component component)
     {
-        _component = component;
+        Component = component;
     }
 
     public abstract string GetNotificationMessage();

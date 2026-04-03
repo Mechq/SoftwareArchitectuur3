@@ -4,18 +4,18 @@ using AvansDevOps.Thread;
 using AvansDevOps.User;
 using AvansDevOps.VersionControl;
 
-namespace AvansDevOps.ProjectManagement;
+namespace AvansDevOps.ProjectManagement.Composite;
 
 public class BacklogItemComposite : Component
 {
-    private string _name;
-    private List<ActivityLeaf> _activities = [];
+    private readonly string _name;
+    private readonly List<ActivityLeaf> _activities = [];
     private Developer _developer;
     private String _description;
     private State.State _state;
-    private List<IBacklogObserver> _observers = [];
+    private readonly List<IBacklogObserver> _observers = [];
     private IVersionControl _versionControl;
-    private INotification _notifier;
+    private readonly INotification _notifier;
     public BacklogItemComposite(string name, string description, IVersionControl versionControl, INotification notifier)
     {
         _name = name;
@@ -111,7 +111,7 @@ public class BacklogItemComposite : Component
     {
         foreach (IBacklogObserver observer in _observers)
         {
-            observer.update(_state);
+            observer.Update(_state);
         }
     }
     

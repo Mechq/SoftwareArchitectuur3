@@ -5,8 +5,8 @@ namespace AvansDevOps.Thread;
 
 public class Discussion : IBacklogObserver
 {
-    private String _name;
-    private List<String> _messages = [];
+    private readonly String _name;
+    private readonly List<String> _messages = [];
     private bool _canEdit = true;
     private readonly INotification _notifier;
 
@@ -42,8 +42,8 @@ public class Discussion : IBacklogObserver
         return _name;
     } 
     
-    public void update(State.State state)
+    public void Update(State.State state)
     {
-        _canEdit = state.GetType() != typeof(State.DoneState); //done == no edit
+        _canEdit = state.GetType() != typeof(DoneState); //done == no edit
     }
 }

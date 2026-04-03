@@ -1,10 +1,10 @@
 using AvansDevOps.ProjectManagement;
 
-namespace AvansDevOps;
+namespace AvansDevOps.ProjectManagement.Composite;
 
 public class BacklogComposite : Component
 {
-    private List<BacklogItemComposite> _backlogItems = [];
+    private readonly List<BacklogItemComposite> _backlogItems = [];
     
     public void Add(Component backlogItem)
     {

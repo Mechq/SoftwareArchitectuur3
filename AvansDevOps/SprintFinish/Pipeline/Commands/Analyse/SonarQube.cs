@@ -1,4 +1,4 @@
-namespace AvansDevOps.SprintFinish.Pipeline;
+namespace AvansDevOps.SprintFinish.Pipeline.Commands.Analyse;
 
 public class SonarQube : IAnalyseTemplate
 {

@@ -10,9 +10,9 @@ public class DoingState : State
     public override void TaskComplete()
     {
         //developer considers his task done
-        _component.ChangeState(new ReadyForTestingState(_component));
+        Component.ChangeState(new ReadyForTestingState(Component));
     }
     
     public override string GetNotificationMessage() => 
-        $"The item \"{_component.GetName()}\" has been picked up by a developer.";
+        $"The item \"{Component.GetName()}\" has been picked up by a developer.";
 }

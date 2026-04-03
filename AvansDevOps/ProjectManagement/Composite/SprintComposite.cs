@@ -1,20 +1,19 @@
-using System.Runtime.InteropServices.JavaScript;
 using AvansDevOps.Report;
 using AvansDevOps.SprintFinish;
 using AvansDevOps.SprintFinish.Pipeline;
 using AvansDevOps.User;
 
-namespace AvansDevOps.ProjectManagement;
+namespace AvansDevOps.ProjectManagement.Composite;
 
 public class SprintComposite : Component
 {
-    private string _name;
-    private DateTime _startDate;
-    private DateTime _endDate;
-    private ScrumMaster? _scrumMaster = null;
-    public BacklogComposite  backlog =  new BacklogComposite();
-    private Boolean _isFinished = false;
-    private Boolean _isReleased = false;
+    private readonly string _name;
+    private readonly DateTime _startDate;
+    private readonly DateTime _endDate;
+    private ScrumMaster? _scrumMaster;
+    public BacklogComposite Backlog =  new();
+    private Boolean _isFinished;
+    private Boolean _isReleased;
     private readonly ISprintStrategy _sprintStrategy;
     private readonly PipelineHandler _pipelineHandler;
 
@@ -44,7 +43,7 @@ public class SprintComposite : Component
         Console.WriteLine("Invalid method for this class");
     }
     
-    public void Print(){ Console.WriteLine($"Sprint {_name} started at {_startDate} and ended at {_endDate}. The scrum master is {_scrumMaster?.ToString()}" ); }
+    public void Print(){ Console.WriteLine($"Sprint {_name} started at {_startDate} and ended at {_endDate}. The scrum master is {_scrumMaster}" ); }
     
     public string GetName(){return _name;}
     

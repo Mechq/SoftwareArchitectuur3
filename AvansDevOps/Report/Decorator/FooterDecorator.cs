@@ -2,8 +2,8 @@ namespace AvansDevOps.Report;
 
 public class FooterDecorator : ReportDecorator
 {
-    private DateOnly _date;
-    private int _version;
+    private readonly DateOnly _date;
+    private readonly int _version;
 
     public FooterDecorator(IReport inner, DateOnly date, int version)
         : base(inner)
@@ -14,7 +14,7 @@ public class FooterDecorator : ReportDecorator
 
     public override void Generate(IReportStrategy strategy)
     {
-        _inner.Generate(strategy);
+        Inner.Generate(strategy);
         strategy.GenerateFooter(_date, _version);
     }
 }

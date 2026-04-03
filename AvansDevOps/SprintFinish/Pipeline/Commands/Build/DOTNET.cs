@@ -1,4 +1,4 @@
-namespace AvansDevOps.SprintFinish.Pipeline.Build;
+namespace AvansDevOps.SprintFinish.Pipeline.Commands.Build;
 
 public class DOTNET : IBuildStrategy
 {

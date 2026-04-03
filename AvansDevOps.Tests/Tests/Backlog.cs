@@ -1,9 +1,10 @@
 using AvansDevOps.Notification;
 using AvansDevOps.ProjectManagement;
+using AvansDevOps.ProjectManagement.Composite;
 using AvansDevOps.VersionControl;
 using NUnit.Framework;
 
-namespace AvansDevOps.Tests;
+namespace AvansDevOps.Tests.Tests;
 
 [TestFixture]
 public class Backlog

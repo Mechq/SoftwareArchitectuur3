@@ -6,11 +6,11 @@ namespace AvansDevOps.ProjectManagement;
 
 public class ActivityLeaf : Component
 {
-    private String _name;
+    private readonly String _name;
     private String _description;
     private State.State _state;
     private Developer _developer;
-    private INotification _notifier;
+    private readonly INotification _notifier;
     
     public ActivityLeaf(string name, string description, INotification notifier)
     {
@@ -45,6 +45,11 @@ public class ActivityLeaf : Component
     public string GetName()
     {
         return _name;
+    }
+
+    public Developer GetDeveloper()
+    {
+        return _developer;
     }
 
     public void AssignDeveloper(Developer developer)

@@ -10,7 +10,7 @@ using AvansDevOps.VersionControl.Service;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
-namespace AvansDevOps.Tests;
+namespace AvansDevOps.Tests.Tests;
 
 [TestFixture]
 public class Project
