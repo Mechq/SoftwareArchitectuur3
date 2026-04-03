@@ -4,6 +4,6 @@ public class Utility : ICommand
 {
     public void Execute()
     {
-        throw new NotImplementedException();
+        Console.WriteLine($"{nameof(Utility)} executed successfully.");
     }
 }

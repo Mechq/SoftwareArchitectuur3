@@ -1,4 +1,3 @@
-using AvansDevOps.Notification;
 using AvansDevOps.ProjectManagement;
 
 namespace AvansDevOps.State;
