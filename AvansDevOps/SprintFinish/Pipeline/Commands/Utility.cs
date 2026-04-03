@@ -6,4 +6,4 @@ public class Utility : ICommand
     {
         Console.WriteLine($"{nameof(Utility)} executed successfully.");
     }
-}
+} 
