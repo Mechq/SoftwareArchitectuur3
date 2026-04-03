@@ -13,7 +13,12 @@ public class BacklogComposite : Component
     
     public void Remove(Component backlogItem)
     {
-        _backlogItems.Add((BacklogItemComposite)backlogItem);
+        _backlogItems.Remove((BacklogItemComposite)backlogItem);
+    }
+    
+    public List<BacklogItemComposite> GetBacklogItems()
+    {
+        return _backlogItems;
     }
     
     public void Print()

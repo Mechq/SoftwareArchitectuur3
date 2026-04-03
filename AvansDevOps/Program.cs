@@ -32,9 +32,14 @@ internal class Program
         project.backlog.Add(backlogItemTwo);
         Console.WriteLine("-- Created backlog items in project --\n");
         
-        SprintComposite sprintOne = new SprintComposite("Week 1, Startup", DateTime.Now, new DateTime().AddDays(7), new FeedbackSprintStrategy(slackNotifier, factory));
-        SprintComposite sprintTwo =
-            new SprintComposite("Week 2, Code grind", new DateTime().AddDays(7), new DateTime().AddDays(14), new ReleaseSprintStrategy(slackNotifier, factory));
+        var start = DateTime.Now;
+        var end = DateTime.Now.AddDays(7);
+        SprintComposite sprintOne = new SprintComposite(
+            "Week 1, Startup", start, end,
+            new FeedbackSprintStrategy(slackNotifier, factory));
+        SprintComposite sprintTwo = new SprintComposite(
+            "Week 2, Code grind", end, DateTime.Now.AddDays(14),
+            new ReleaseSprintStrategy(slackNotifier, factory));
         project.Add(sprintOne);
         project.Add(sprintTwo);
         Console.WriteLine("-- Created sprints in project--\n");

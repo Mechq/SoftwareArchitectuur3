@@ -1,6 +1,6 @@
 namespace AvansDevOps.SprintFinish.Pipeline.Test;
 
-public class NUnit : ITestStrategy
+public class XUnit : ITestStrategy
 {
     private void RunTests()
     {
