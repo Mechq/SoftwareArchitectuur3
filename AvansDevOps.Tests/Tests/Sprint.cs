@@ -1,8 +1,13 @@
 using AvansDevOps.Notification;
 using AvansDevOps.ProjectManagement;
 using AvansDevOps.ProjectManagement.Composite;
+using AvansDevOps.Report;
 using AvansDevOps.SprintFinish;
 using AvansDevOps.SprintFinish.Pipeline;
+using AvansDevOps.SprintFinish.Pipeline.Commands;
+using AvansDevOps.SprintFinish.Pipeline.Commands.Analyse;
+using AvansDevOps.SprintFinish.Pipeline.Commands.Build;
+using AvansDevOps.SprintFinish.Pipeline.Commands.Test;
 using AvansDevOps.User;
 
 namespace AvansDevOps.Tests.Tests;
@@ -122,5 +127,44 @@ public class Sprint
         );
 
         Assert.DoesNotThrow(() => sprint.RunPipeline());
+    }
+    
+    [Test]
+    public void GenerateReport_DoesNotThrow_WithDecorators()
+    {
+        Assert.DoesNotThrow(() =>
+            _sprint.GenerateReport(new TestReportStrategy(), true, true)
+        );
+
+        Assert.DoesNotThrow(() =>
+            _sprint.GenerateReport(new TestReportStrategy(), false, true)
+        );
+
+        Assert.DoesNotThrow(() =>
+            _sprint.GenerateReport(new TestReportStrategy(), true, false)
+        );
+
+        Assert.DoesNotThrow(() =>
+            _sprint.GenerateReport(new TestReportStrategy(), false, false)
+        );
+    }
+
+// Minimal test doubles
+    public class TestReportStrategy : IReportStrategy
+    {
+        public void GenerateReport(Report.Report report)
+        {
+            // do nothing
+        }
+
+        public void GenerateFooter(DateOnly date, int version)
+        {
+            //do nothing
+        }
+
+        public void GenerateHeader(string companyName, string logoUrl)
+        {
+            //do notihng
+        }
     }
 }

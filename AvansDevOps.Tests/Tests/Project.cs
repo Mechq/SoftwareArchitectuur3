@@ -140,6 +140,44 @@ public class Project
     }
 
     
+    [Test]
+    public void Constructor_SendsGitInitCommand()
+    {
+        var mockVersionControl = new MockVersionControl();
+        var project = new ProjectComposite("TestProject", _productOwner, mockVersionControl);
+
+        Assert.That(mockVersionControl.LastCommand, Is.EqualTo("git init TestProject"));
+    }
+
+    [Test]
+    public void AddUser_UserAppearsInInternalList()
+    {
+        var dev = new Developer("Alice", "alice@gmail.com", "pw", 1);
+        _project.AddUser(dev);
+
+        Assert.That(_project.GetUsers(), Contains.Item(dev));
+    }
+
+    [Test]
+    public void RemoveUser_UserActuallyRemovedFromList()
+    {
+        var dev = new Developer("Bob", "bob@gmail.com", "pw", 2);
+        _project.AddUser(dev);
+        _project.RemoveUser(dev);
+
+        Assert.That(_project.GetUsers(), Does.Not.Contain(dev));
+    }
+
+    [Test]
+    public void Add_SameSprintTwice_AllowsDuplicates()
+    {
+        var sprint = CreateSprint("Sprint 1");
+        _project.Add(sprint);
+        _project.Add(sprint);
+
+        Assert.That(_project.GetSprints().Count, Is.EqualTo(2));
+    }
+    
 
     private SprintComposite CreateSprint(string name)
     {
@@ -147,4 +185,15 @@ public class Project
         return new SprintComposite(name, start, start.AddDays(7),
             new FeedbackSprintStrategy(_slackNotifier, _factory));
     }
+    
+    public class MockVersionControl : IVersionControl
+    {
+        public string LastCommand { get; private set; }
+        public void SendCommand(string command)
+        {
+            LastCommand = command;
+        }
+    }
+    
+    
 }

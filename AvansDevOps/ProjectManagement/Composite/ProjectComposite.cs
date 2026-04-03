@@ -71,6 +71,11 @@ public class ProjectComposite : Component
         }
     }
 
+    public List<User.User> GetUsers()
+    {
+        return _users;
+    }
+
     public void AddUser(User.User user)
     {
         _users.Add(user);
