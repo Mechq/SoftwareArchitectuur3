@@ -1,45 +1,49 @@
+using AvansDevOps.Notification;
 using AvansDevOps.State;
 
 namespace AvansDevOps.Thread;
 
 public class Discussion : IBacklogObserver
 {
-    private String name;
-    private List<String> messages = [];
-    private bool canEdit = true;
+    private String _name;
+    private List<String> _messages = [];
+    private bool _canEdit = true;
+    private readonly INotification _notifier;
 
-    public Discussion(String name, List<String> messages)
+    public Discussion(String name, List<String> messages, INotification notifier)
     {
-        this.name = name;
-        this.messages = messages;
+        _name = name;
+        _messages = messages;
+        _notifier = notifier;
     }
 
     public void AddMessage(String message)
     {
-        if (canEdit)
+        if (_canEdit)
         {
-            messages.Add(message);
+            _messages.Add(message);
+            _notifier.SendNotification(message); 
         }
         else
         {
             Console.WriteLine("This discussion is closed");
         }
+        
+        
     }
 
     public List<String> GetMessages()
     {
-        return messages;
+        return _messages;
     }
 
     public String GetName()
     {
-        return name;
+        return _name;
     } 
     
     public void update(State.State state)
     {
-        canEdit = state.GetType() != typeof(State.DoneState); //done == no edit
+        _canEdit = state.GetType() != typeof(State.DoneState); //done == no edit
     }
-
- 
 }

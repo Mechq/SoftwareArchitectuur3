@@ -1,19 +1,23 @@
 using AvansDevOps.User;
+using AvansDevOps.VersionControl;
 
-namespace AvansDevOps.ProjectManagement;
+namespace AvansDevOps.ProjectManagement.Composite;
 
 public class ProjectComposite : Component
 {
-    private String _name;
+    private readonly String _name;
     private ProductOwner _productOwner;
-    private List<User.User> _users = [];
+    private readonly List<User.User> _users = [];
     private readonly List<SprintComposite> _sprints = [];
     public BacklogComposite backlog =  new BacklogComposite();
+    private IVersionControl _versionControl;
 
-    public ProjectComposite(string name, ProductOwner productOwner)
+    public ProjectComposite(string name, ProductOwner productOwner, IVersionControl versionControl)
     {
         _name = name;
         _productOwner = productOwner;
+        _versionControl = versionControl;
+        versionControl.SendCommand("git init " + _name);
     }
 
     public void Remove(Component component)
@@ -34,22 +38,18 @@ public class ProjectComposite : Component
         {
             throw new ArgumentException("Component must be of type SprintComposite");
         }
-        _sprints.Add((SprintComposite) component);
+        _sprints.Add((SprintComposite)component);
         
         Console.WriteLine("Successfully added Sprint: "  + component.GetName());
     }
 
-    public void Print(){Console.WriteLine("Project is called:" + _name);}
+    public void Print(){Console.WriteLine("Project is called:" + _name + " and the product owner is: "  + _productOwner.GetName());}
 
     public List<SprintComposite> GetSprints()
     {
         return _sprints;
     }
 
-    public SprintComposite GetSprintByIndex(int index)
-    {
-        return  _sprints[index];
-    }
     
     public string GetName()
     {
@@ -89,29 +89,5 @@ public class ProjectComposite : Component
         {
             Console.WriteLine(user.ToString());
         }
-    }
-
-    public void PrintAllScrumMasters()
-    {
-        foreach (User.User user in _users)
-        {
-            if (user.GetType() == typeof(ScrumMaster))
-            {
-                Console.WriteLine(user.ToString());
-            }
-        }
-        
-    }
-
-    public User.User? GetUserByEmail(string email)
-    {
-        foreach (User.User user in _users)
-        {
-            if (user.GetEmail() == email)
-            {
-                return user;
-            }
-        }
-        return null;
     }
 }

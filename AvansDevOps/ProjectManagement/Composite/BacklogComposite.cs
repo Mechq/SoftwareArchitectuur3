@@ -15,11 +15,6 @@ public class BacklogComposite : Component
     {
         _backlogItems.Add((BacklogItemComposite)backlogItem);
     }
-
-    public BacklogItemComposite getBacklogItemByIndex(int index)
-    {
-        return _backlogItems[index];
-    }
     
     public void Print()
     {
@@ -32,5 +27,17 @@ public class BacklogComposite : Component
     public String GetName()
     {
         return "Backlog";
+    }
+    
+    
+    public void MoveBacklogItem(BacklogItemComposite item, BacklogComposite destination)
+    {
+        if (!_backlogItems.Contains(item))
+        {
+            Console.WriteLine("Item not found in this backlog.");
+            return;
+        }
+        Remove(item);
+        destination.Add(item);
     }
 }

@@ -1,6 +1,7 @@
 using AvansDevOps.State;
 using AvansDevOps.Thread;
 using AvansDevOps.User;
+using AvansDevOps.VersionControl;
 
 namespace AvansDevOps.ProjectManagement;
 
@@ -12,11 +13,14 @@ public class BacklogItemComposite : Component
     private String _description;
     private State.State _state;
     private List<IBacklogObserver> _observers = [];
-    public BacklogItemComposite(string name, string description)
+    private IVersionControl _versionControl;
+    public BacklogItemComposite(string name, string description, IVersionControl versionControl)
     {
         _name = name;
         _description = description;
         _state = new ToDoState(this);
+        _versionControl  = versionControl;
+        versionControl.SendCommand("git branch " + _name);
 
     }
 
@@ -101,11 +105,6 @@ public class BacklogItemComposite : Component
         {
             observer.update(_state);
         }
-    }
-
-    public IBacklogObserver GetObserverByIndex(int index)
-    {
-        return _observers[index];
     }
     
 }

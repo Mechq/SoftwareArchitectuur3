@@ -1,4 +1,5 @@
 using AvansDevOps.ProjectManagement;
+using AvansDevOps.ProjectManagement.Composite;
 
 namespace AvansDevOps.User;
 
