@@ -1,5 +1,6 @@
 using AvansDevOps.State;
 using AvansDevOps.User;
+using AvansDevOps.Notification;
 
 namespace AvansDevOps.ProjectManagement;
 
@@ -9,12 +10,15 @@ public class ActivityLeaf : Component
     private String _description;
     private State.State _state;
     private Developer _developer;
+    private INotification _notifier;
     
-    public ActivityLeaf(string name, string description)
+    public ActivityLeaf(string name, string description, INotification notifier)
     {
         _name = name;
         _description = description;
-
+        _state = new ToDoState(this);
+        _notifier = notifier;
+        _notifier.SendNotification(_state.GetNotificationMessage());
     }
 
     public void Remove(Component component)
@@ -52,6 +56,7 @@ public class ActivityLeaf : Component
     {
         Console.WriteLine($"Context: Transition to {newState.GetType().Name}.");
         _state = newState;
+        _notifier.SendNotification(_state.GetNotificationMessage());
     }
 
     public State.State GetState()

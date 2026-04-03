@@ -62,9 +62,9 @@ internal class Program
         
         
         ActivityLeaf activityOne =
-            new ActivityLeaf("Frontend studie", "Kijk naar de beste technologieen voor web applicaties");
+            new ActivityLeaf("Frontend studie", "Kijk naar de beste technologieen voor web applicaties", slackNotifier);
         ActivityLeaf activityTwo =
-            new ActivityLeaf("Backend studie", "Kijk naar de beste technologieen voor backend servers");
+            new ActivityLeaf("Backend studie", "Kijk naar de beste technologieen voor backend servers", slackNotifier);
         sprintBacklogItemOne.Add(activityOne);
         sprintBacklogItemOne.Add(activityTwo);
         Console.WriteLine("-- Created activities in backlog items --\n");
