@@ -25,10 +25,10 @@ internal class Program
         ProjectComposite project = new ProjectComposite("Portfolio", productOwner, gitHubCreator);
         Console.WriteLine("-- Created project --\n");
         
-        BacklogItemComposite backlogItemOne = new BacklogItemComposite("Diagram maken", "UML klassen Diagram tekenen.", gitHubCreator);
+        BacklogItemComposite backlogItemOne = new BacklogItemComposite("Diagram maken", "UML klassen Diagram tekenen.", gitHubCreator, slackNotifier);
         project.backlog.Add(backlogItemOne);
         BacklogItemComposite backlogItemTwo = new BacklogItemComposite("Github repository aanmaken",
-            "Maak een GitHub repoistory voor de frontend en backend.", gitHubCreator);
+            "Maak een GitHub repoistory voor de frontend en backend.", gitHubCreator, slackNotifier);
         project.backlog.Add(backlogItemTwo);
         Console.WriteLine("-- Created backlog items in project --\n");
         
@@ -45,14 +45,16 @@ internal class Program
 
         
         BacklogItemComposite sprintBacklogItemOne = new BacklogItemComposite("Onderzoek naar techstack",
-            "Ga op onderzoek om te kijken wat de beste techstack voor de frontend en backend is", gitHubCreator);
+            "Ga op onderzoek om te kijken wat de beste techstack voor de frontend en backend is", gitHubCreator, slackNotifier);
         BacklogItemComposite sprintBacklogItemTwo =
-            new BacklogItemComposite("Doe software engineering", "Voer de eerste drie stappen van het SDLC uit", gitHubCreator);
+            new BacklogItemComposite("Doe software engineering", "Voer de eerste drie stappen van het SDLC uit", gitHubCreator, slackNotifier);
         sprintOne.backlog.Add(sprintBacklogItemOne);
         sprintOne.backlog.Add(sprintBacklogItemTwo);
         
         project.backlog.MoveBacklogItem(backlogItemOne, sprintOne.backlog);
         Console.WriteLine("-- Created backlog items in sprint --\n");
+        
+        
         
         ActivityLeaf activityOne =
             new ActivityLeaf("Frontend studie", "Kijk naar de beste technologieen voor web applicaties");

@@ -1,3 +1,4 @@
+using AvansDevOps.Notification;
 using AvansDevOps.ProjectManagement;
 
 namespace AvansDevOps.State;
@@ -6,10 +7,9 @@ public class TestingState : State
 {
     public TestingState(Component component) : base(component) { }
 
-    public override void SendNotification(String info)
-    {
-        //send notification to developer in case it fails
-    }
+
+   public override string GetNotificationMessage() => 
+       $"The item \"{_component.GetName()}\" has been picked up by a tester.";
 
     public override void CompletedTests()
     {

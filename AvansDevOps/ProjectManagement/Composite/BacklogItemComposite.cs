@@ -1,3 +1,4 @@
+using AvansDevOps.Notification;
 using AvansDevOps.State;
 using AvansDevOps.Thread;
 using AvansDevOps.User;
@@ -14,13 +15,17 @@ public class BacklogItemComposite : Component
     private State.State _state;
     private List<IBacklogObserver> _observers = [];
     private IVersionControl _versionControl;
-    public BacklogItemComposite(string name, string description, IVersionControl versionControl)
+    private INotification _notifier;
+    public BacklogItemComposite(string name, string description, IVersionControl versionControl, INotification notifier)
     {
         _name = name;
         _description = description;
         _state = new ToDoState(this);
         _versionControl  = versionControl;
         versionControl.SendCommand("git branch " + _name);
+        _notifier = notifier;
+        _notifier.SendNotification(_state.GetNotificationMessage());
+
 
     }
 
@@ -40,6 +45,8 @@ public class BacklogItemComposite : Component
             throw new ArgumentException("Component must be of type ActivityLeaf");
         }
         _activities.Add((ActivityLeaf)component);
+        _notifier.SendNotification(_state.GetNotificationMessage());
+
     }
 
     public void Print(){Console.WriteLine(" This backlog item is called " + _name + " and contains the activities: "); PrintActivity();}
@@ -72,6 +79,7 @@ public class BacklogItemComposite : Component
     {
         Console.WriteLine($"Context: Transition to {newState.GetType().Name}.");
         _state = newState;
+        _notifier.SendNotification(_state.GetNotificationMessage());
         NotifyObservers();
     }
 

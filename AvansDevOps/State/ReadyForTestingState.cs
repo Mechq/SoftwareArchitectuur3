@@ -1,3 +1,4 @@
+using AvansDevOps.Notification;
 using AvansDevOps.ProjectManagement;
 
 namespace AvansDevOps.State;
@@ -5,10 +6,9 @@ namespace AvansDevOps.State;
 public class ReadyForTestingState: State
 {
     public ReadyForTestingState(Component component) : base(component) { }
-    public override void SendNotification(String info)
-    {
-        
-    }
+
+    public override string GetNotificationMessage() => 
+        $"@Testers the item \"{_component.GetName()}\" is ready for testing.";
 
     public override void StartedTesting()
     {

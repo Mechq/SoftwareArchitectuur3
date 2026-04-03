@@ -1,3 +1,4 @@
+using AvansDevOps.Notification;
 using AvansDevOps.ProjectManagement;
 
 namespace AvansDevOps.State;
@@ -10,8 +11,8 @@ public abstract class State
     {
         _component = component;
     }
-    
-    public abstract void SendNotification(String info);
+
+    public abstract string GetNotificationMessage();
     public virtual void TaskComplete() {}
     public virtual void StartOver() {}
     public virtual void StartedTesting() {}

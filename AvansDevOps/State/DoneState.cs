@@ -1,3 +1,4 @@
+using AvansDevOps.Notification;
 using AvansDevOps.ProjectManagement;
 
 namespace AvansDevOps.State;
@@ -5,10 +6,9 @@ namespace AvansDevOps.State;
 public class DoneState : State
 {
     public DoneState(Component component) : base(component) { }
-    public override void SendNotification(String info)
-    {
-        //send noti to developer
-    }
+
+    public override string GetNotificationMessage() => 
+        $"The item \"{_component.GetName()}\" is finished!";
 
     public override void StartOver()
     {
