@@ -1,5 +1,6 @@
 using AvansDevOps.Notification;
 using AvansDevOps.SprintFinish.Pipeline;
+using AvansDevOps.SprintFinish.Pipeline.PipelineFactory;
 
 namespace AvansDevOps.SprintFinish;
 

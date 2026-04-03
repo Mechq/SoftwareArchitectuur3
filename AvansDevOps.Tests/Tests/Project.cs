@@ -3,6 +3,7 @@ using AvansDevOps.ProjectManagement;
 using AvansDevOps.ProjectManagement.Composite;
 using AvansDevOps.SprintFinish;
 using AvansDevOps.SprintFinish.Pipeline;
+using AvansDevOps.SprintFinish.Pipeline.PipelineFactory;
 using AvansDevOps.User;
 using AvansDevOps.VersionControl;
 using AvansDevOps.VersionControl.Adapter;

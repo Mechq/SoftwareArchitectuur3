@@ -3,7 +3,7 @@ using AvansDevOps.SprintFinish.Pipeline.Commands.Analyse;
 using AvansDevOps.SprintFinish.Pipeline.Commands.Build;
 using AvansDevOps.SprintFinish.Pipeline.Commands.Test;
 
-namespace AvansDevOps.SprintFinish.Pipeline;
+namespace AvansDevOps.SprintFinish.Pipeline.PipelineFactory;
 
 public interface IPipelineToolFactory
 {

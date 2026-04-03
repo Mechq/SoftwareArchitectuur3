@@ -182,6 +182,19 @@ public class BacklogItem
     {
         Assert.DoesNotThrow(() => _backlogItem.NotifyObservers());
     }
+    
+    [Test]
+    public void ReadyForTesting_CannotTransitionBack_ToDoing()
+    {
+        var item = new BacklogItemComposite("Login", "description", _versionControl, _notifier);
+        item.ChangeState(new DoingState(item));
+        item.ChangeState(new ReadyForTestingState(item));
+
+        
+        item.GetState().TaskComplete();
+
+        Assert.That(item.GetState(), Is.Not.InstanceOf<DoingState>());
+    }
 }
 
 

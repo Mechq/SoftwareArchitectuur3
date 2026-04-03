@@ -1,3 +1,5 @@
+using AvansDevOps.SprintFinish.Pipeline.PipelineFactory;
+
 namespace AvansDevOps.SprintFinish.Pipeline;
 
 public class PipelineBuilder

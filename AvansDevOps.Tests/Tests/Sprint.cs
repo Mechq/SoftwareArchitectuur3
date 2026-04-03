@@ -8,7 +8,9 @@ using AvansDevOps.SprintFinish.Pipeline.Commands;
 using AvansDevOps.SprintFinish.Pipeline.Commands.Analyse;
 using AvansDevOps.SprintFinish.Pipeline.Commands.Build;
 using AvansDevOps.SprintFinish.Pipeline.Commands.Test;
+using AvansDevOps.SprintFinish.Pipeline.PipelineFactory;
 using AvansDevOps.User;
+using AvansDevOps.VersionControl;
 
 namespace AvansDevOps.Tests.Tests;
 
@@ -23,12 +25,14 @@ public class Sprint
 {
     private SprintComposite _sprint;
     private ISprintStrategy _strategy;
+    private INotification emailNotifier;
+    private IPipelineToolFactory factory;
 
     [SetUp]
     public void SetUp()
     {
-        INotification emailNotifier = new EmailAdapter(new EmailService());
-        IPipelineToolFactory factory = new DefaultPipelineFactory();
+        emailNotifier = new EmailAdapter(new EmailService());
+        factory = new DefaultPipelineFactory();
         _strategy = new FeedbackSprintStrategy(emailNotifier, factory); // simplest strategy
         _sprint = new SprintComposite(
             "Sprint 1",
@@ -147,6 +151,31 @@ public class Sprint
         Assert.DoesNotThrow(() =>
             _sprint.GenerateReport(new TestReportStrategy(), false, false)
         );
+    }
+    
+    
+    [Test]
+    public void Project_GetSprints_AggregatesDataFromBothSprints()
+    {
+        
+        IVersionControl versionControl = new GitHubAdapter(new GitHubService());
+        var productOwner = new ProductOwner("Stef", "stef@gmail.com", "pw", 123);
+        var project = new ProjectComposite("Portfolio", productOwner, versionControl);
+
+        var start = DateTime.Now;
+        var sprintOne = new SprintComposite("Sprint 1", start, start.AddDays(7),
+            new FeedbackSprintStrategy(emailNotifier, factory));
+        var sprintTwo = new SprintComposite("Sprint 2", start.AddDays(7), start.AddDays(14),
+            new ReleaseSprintStrategy(emailNotifier, factory));
+
+        project.Add(sprintOne);
+        project.Add(sprintTwo);
+
+        var sprints = project.GetSprints();
+
+        Assert.That(sprints.Count, Is.EqualTo(2));
+        Assert.That(sprints[0].GetName(), Is.EqualTo("Sprint 1"));
+        Assert.That(sprints[1].GetName(), Is.EqualTo("Sprint 2"));
     }
 
 // Minimal test doubles

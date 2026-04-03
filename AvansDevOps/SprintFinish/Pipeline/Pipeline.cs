@@ -1,3 +1,4 @@
+using AvansDevOps.Notification;
 using AvansDevOps.SprintFinish.Pipeline.Commands;
 
 namespace AvansDevOps.SprintFinish.Pipeline;
@@ -6,6 +7,7 @@ public class Pipeline
 {
     private readonly List<ICommand> _commands = [];
     private readonly List<Log> _logs = [];
+    private readonly INotification _notifier = new EmailAdapter(new EmailService());
 
     public void AddCommand(ICommand command)
     {
@@ -27,6 +29,7 @@ public class Pipeline
             catch (Exception e)
             {
                 _logs.Add(new Log($"{command.GetType().Name}", "FAIL", dt));
+                _notifier.SendNotification(e.Message);
                 throw;
             }
         }

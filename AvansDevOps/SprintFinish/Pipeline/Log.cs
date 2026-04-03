@@ -16,5 +16,10 @@ public class Log
     {
         Console.WriteLine($"[{_tag}] \"{_message}\" | {_date}");
     }
+
+    public String GetTag()
+    {
+        return _tag;
+    }
     
 }

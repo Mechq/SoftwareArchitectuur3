@@ -1,5 +1,7 @@
 using AvansDevOps.SprintFinish.Pipeline;
 using AvansDevOps.SprintFinish.Pipeline.Commands;
+using AvansDevOps.SprintFinish.Pipeline.Commands.Build;
+using AvansDevOps.SprintFinish.Pipeline.PipelineFactory;
 
 namespace AvansDevOps.Tests.Tests;
 
@@ -82,6 +84,39 @@ public class PipelinehandlerTest
         _pipeline.AddCommand(new TestCommand(true));
 
         Assert.Throws<Exception>(() => _handler.RedoPipeline());
+    }
+    
+    [Test]
+    public void Pipeline_Failure_SendsNotification()
+        {
+            var pipeline = new Pipeline();
+            pipeline.AddCommand(new TestCommand());
+
+            Assert.Throws<Exception>(() => pipeline.Execute());
+            Assert.That(pipeline.GetLogs()[0].GetTag(), Is.EqualTo("FAIL"));
+        }
+
+
+    [Test]
+    public void Pipeline_CanBeBuilt_WithTwoDifferentBuildTypes()
+    {
+        
+        var dotnetFactory = new DefaultPipelineFactory();
+        var dotnetPipeline = new PipelineBuilder(dotnetFactory)
+            .AddBuildStep()
+            .GetResult();
+
+        
+        var mavenFactory = new MavenPipelineFactory();
+        var mavenPipeline = new PipelineBuilder(mavenFactory)
+            .AddBuildStep()
+            .GetResult();
+
+        Assert.DoesNotThrow(() => dotnetPipeline.Execute());
+        Assert.DoesNotThrow(() => mavenPipeline.Execute());
+
+        Assert.That(dotnetPipeline.GetLogs()[0].GetTag(), Is.EqualTo("SUCCESS"));
+        Assert.That(mavenPipeline.GetLogs()[0].GetTag(), Is.EqualTo("SUCCESS"));
     }
 }
 

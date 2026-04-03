@@ -5,6 +5,7 @@ using AvansDevOps.SprintFinish.Pipeline.Commands;
 using AvansDevOps.SprintFinish.Pipeline.Commands.Analyse;
 using AvansDevOps.SprintFinish.Pipeline.Commands.Build;
 using AvansDevOps.SprintFinish.Pipeline.Commands.Test;
+using AvansDevOps.SprintFinish.Pipeline.PipelineFactory;
 
 namespace AvansDevOps.Tests.Tests;
 
